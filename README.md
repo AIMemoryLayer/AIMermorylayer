@@ -5,7 +5,6 @@ Unlike hosted proprietary solutions, this platform gives you **100% data soverei
 Built on a high-performance Python FastAPI vector core and orchestrated via a scalable Turborepo architecture, it is designed to securely give your AI agents long-term memory without sacrificing control of your data.
 
 ## Star History
-## Star History
 
 <a href="https://www.star-history.com/?repos=AIMemoryLayer%2FAIMermorylayer&type=date&legend=top-left">
  <picture>
