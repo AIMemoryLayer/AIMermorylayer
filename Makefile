@@ -3,7 +3,7 @@
 # Install all dependencies (Node and Python)
 install:
 	pnpm install
-	poetry install
+	poetry install --no-root
 
 # Run the development environment via Turbo
 dev:
