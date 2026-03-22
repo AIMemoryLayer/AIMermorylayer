@@ -11,14 +11,16 @@ AIMemoryLayer is an enterprise-grade, high-performance middleware designed to gi
 AIMemoryLayer is built as a hybrid microservices monorepo to leverage the strengths of Python for AI and TypeScript for API management.
 
 ### 🐍 Python Services (Core AI Logic)
-*   **`services/memory`**: Handles vector database transactions (Pinecone/Weaviate/Chroma).
-*   **`services/agent`**: Orchestrates LLM reasoning and memory retrieval logic (LangChain/LlamaIndex).
-*   **`services/ingestion`**: Asynchronous data pipeline for processing and embedding new knowledge.
+
+- **`services/memory`**: Handles vector database transactions (Pinecone/Weaviate/Chroma).
+- **`services/agent`**: Orchestrates LLM reasoning and memory retrieval logic (LangChain/LlamaIndex).
+- **`services/ingestion`**: Asynchronous data pipeline for processing and embedding new knowledge.
 
 ### 🔷 TypeScript Services (Infrastructure & UI)
-*   **`services/gateway`**: Type-safe API Gateway (NestJS/Express) for authentication, RBAC, and rate limiting.
-*   **`frontend/`**: Interactive dashboard for memory visualization and system management.
-*   **`shared/`**: Common types and utility functions shared across the monorepo.
+
+- **`services/gateway`**: Type-safe API Gateway (NestJS/Express) for authentication, RBAC, and rate limiting.
+- **`frontend/`**: Interactive dashboard for memory visualization and system management.
+- **`shared/`**: Common types and utility functions shared across the monorepo.
 
 ---
 
@@ -36,10 +38,10 @@ AIMemoryLayer is built as a hybrid microservices monorepo to leverage the streng
 
 ## 🛠 Tech Stack
 
-*   **Languages:** Python 3.10+, TypeScript 5+
-*   **Frameworks:** FastAPI, NestJS, Next.js, LangChain
-*   **Infrastructure:** Terraform, Docker, Turbo
-*   **Data:** Vector Database (TBD), Redis (Caching), Kafka (Streaming)
+- **Languages:** Python 3.10+, TypeScript 5+
+- **Frameworks:** FastAPI, NestJS, Next.js, LangChain
+- **Infrastructure:** Terraform, Docker, Turbo
+- **Data:** Vector Database (TBD), Redis (Caching), Kafka (Streaming)
 
 ---
 
