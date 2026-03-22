@@ -1,0 +1,31 @@
+[project]
+name = "ai-memory-layer-core"
+version = "0.1.0"
+description = "Core AI Memory services and logic."
+authors = [{ name = "Syed Daiam", email = "daiam@example.com" }]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "langchain>=0.0.240",
+    "numpy>=1.24.0",
+]
+
+[tool.poetry]
+name = "ai-memory-layer-core"
+version = "0.1.0"
+description = "Core AI Memory services and logic."
+authors = ["Syed Daiam <daiam@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.100.0"
+uvicorn = "^0.23.0"
+pydantic = "^2.0.0"
+langchain = "^0.0.240"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
