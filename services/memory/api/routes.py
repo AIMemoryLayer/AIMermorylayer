@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from typing import List, Optional
 from shared.python.models.memory import MemoryRecord
-from services.memory.core.vector_store import VectorStoreProvider
-from services.memory.core.faiss_store import FaissVectorStore
+from core.vector_store import VectorStoreProvider
+from core.faiss_store import FaissVectorStore
 import uuid
 
 router = APIRouter(tags=["Memories"])
