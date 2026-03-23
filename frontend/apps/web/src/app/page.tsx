@@ -11,8 +11,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import { cn } from "../lib/utils";
-import { fetchMemories, createMemory, type MemoryRecord } from "../lib/api";
+import { cn } from "./lib/utils";
+import { fetchMemories, createMemory, type MemoryRecord } from "./lib/api";
 
 export default function Dashboard() {
   const [memories, setMemories] = useState<MemoryRecord[]>([]);
