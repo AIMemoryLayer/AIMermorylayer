@@ -72,7 +72,7 @@ class FaissVectorStore(VectorStoreProvider):
         owner_id: str,
         query: str,
         limit: int,
-        filters: Optional[Dict[str, Any]] = None
+        filters: Optional[Dict[str, Any]] = None,
     ) -> List[MemoryRecord]:
         # 1. Embed and Normalize query
         query_vec = await self.embeddings.aembed_query(query)

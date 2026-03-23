@@ -28,11 +28,11 @@ async def create_memory(memory: MemoryRecord):
 
 @router.get("/memories/{owner_id}", response_model=List[MemoryRecord])
 async def get_memories(
-    owner_id: str, 
-    limit: int = 10, 
+    owner_id: str,
+    limit: int = 10,
     query: Optional[str] = None,
     importance: Optional[str] = None,
-    type: Optional[str] = None
+    type: Optional[str] = None,
 ):
     """
     Retrieve memories for a specific owner (user/agent).
@@ -40,17 +40,23 @@ async def get_memories(
     Supports optional metadata filters (importance, type).
     """
     filters = {}
-    if importance: filters["importance"] = importance
-    if type: filters["type"] = type
+    if importance:
+        filters["importance"] = importance
+    if type:
+        filters["type"] = type
 
     if query:
         return await vector_store.search(owner_id, query, limit, filters=filters)
-    
+
     memories = await vector_store.get_by_owner(owner_id, limit)
     # Apply filters to non-semantic retrieval too
     if filters:
-        memories = [m for m in memories if all(m.metadata.get(k) == v for k, v in filters.items())]
-    
+        memories = [
+            m
+            for m in memories
+            if all(m.metadata.get(k) == v for k, v in filters.items())
+        ]
+
     return memories
 
 
