@@ -1,23 +1,24 @@
 import lancedb
 import os
-import asyncio
 import numpy as np
 from typing import List
 from shared.python.models.memory import MemoryRecord
-from services.memory.core.vector_store import VectorStoreProvider, InMemoryVectorStore
+from services.memory.core.vector_store import VectorStoreProvider
 from langchain_community.embeddings import OllamaEmbeddings
+
 
 class LanceVectorStore(VectorStoreProvider):
     """
     Persistent vector store powered by LanceDB.
     Maintains memory context across server restarts.
     """
+
     def __init__(
-        self, 
-        uri: str = "./data/lance", 
+        self,
+        uri: str = "./data/lance",
         table_name: str = "memories",
         ollama_model: str = "nomic-embed-text",
-        ollama_url: str = "http://localhost:11434"
+        ollama_url: str = "http://localhost:11434",
     ):
         os.makedirs(uri, exist_ok=True)
         self.db = lancedb.connect(uri)
@@ -28,7 +29,7 @@ class LanceVectorStore(VectorStoreProvider):
     async def _get_table(self):
         if self._table is not None:
             return self._table
-        
+
         if self.table_name in self.db.table_names():
             self._table = self.db.open_table(self.table_name)
         else:
@@ -48,15 +49,19 @@ class LanceVectorStore(VectorStoreProvider):
 
         # 2. Persist to LanceDB
         # Convert UUID to str and ensure vector is a list of floats (or numpy array)
-        data = [{
-            "id": str(memory.id),
-            "owner_id": memory.owner_id,
-            "content": memory.content,
-            "vector": np.array(memory.vector, dtype=np.float32).tolist() if memory.vector else [],
-            "metadata": memory.metadata,
-            "created_at": str(memory.created_at)
-        }]
-        
+        data = [
+            {
+                "id": str(memory.id),
+                "owner_id": memory.owner_id,
+                "content": memory.content,
+                "vector": np.array(memory.vector, dtype=np.float32).tolist()
+                if memory.vector
+                else [],
+                "metadata": memory.metadata,
+                "created_at": str(memory.created_at),
+            }
+        ]
+
         if self.table_name not in self.db.table_names():
             self._table = self.db.create_table(self.table_name, data=data)
         else:
@@ -66,11 +71,13 @@ class LanceVectorStore(VectorStoreProvider):
     async def get_by_owner(self, owner_id: str, limit: int) -> List[MemoryRecord]:
         if self.table_name not in self.db.table_names():
             return []
-        
+
         table = await self._get_table()
         # Filter by owner_id
-        results = table.search().where(f"owner_id = '{owner_id}'").limit(limit).to_list()
-        
+        results = (
+            table.search().where(f"owner_id = '{owner_id}'").limit(limit).to_list()
+        )
+
         return [self._map_to_record(r) for r in results]
 
     async def search(self, owner_id: str, query: str, limit: int) -> List[MemoryRecord]:
@@ -79,20 +86,22 @@ class LanceVectorStore(VectorStoreProvider):
 
         # 1. Embed query
         query_vector = await self.embeddings.aembed_query(query)
-        
+
         table = await self._get_table()
         # 2. Vector Search + Metadata Filtering
-        results = table.search(query_vector)\
-            .where(f"owner_id = '{owner_id}'")\
-            .limit(limit)\
+        results = (
+            table.search(query_vector)
+            .where(f"owner_id = '{owner_id}'")
+            .limit(limit)
             .to_list()
-            
+        )
+
         return [self._map_to_record(r) for r in results]
 
     async def delete(self, memory_id: str) -> bool:
         if self.table_name not in self.db.table_names():
             return False
-        
+
         table = await self._get_table()
         table.delete(f"id = '{memory_id}'")
         return True
@@ -104,5 +113,5 @@ class LanceVectorStore(VectorStoreProvider):
             content=raw["content"],
             vector=raw["vector"],
             metadata=raw["metadata"],
-            created_at=raw["created_at"]
+            created_at=raw["created_at"],
         )

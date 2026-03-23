@@ -71,3 +71,10 @@ node_modules/
 .idea/
 *.swp
 *.swo
+
+# Local Data & Database
+data/
+services/memory/data/
+tmp/
+*.faiss
+*.pkl
